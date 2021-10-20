@@ -1,0 +1,37 @@
+- cal_id: ekqk1nbdusr1baon1ic42oeeik@group.calendar.google.com
+  entities:
+  - device_id: f1-fp1
+    search: 'FP1'
+    ignore_availability: true
+    name: F1 - Free Practice 1
+    track: true
+  - device_id: f1-fp2
+    search: 'FP2'
+    ignore_availability: true
+    name: F1 - Free Practice 2
+    track: true
+  - device_id: f1-fp3
+    search: 'FP3'
+    ignore_availability: true
+    name: F1 - Free Practice 3
+    track: true
+  - device_id: f1-qualification
+    search: 'QUALIFYING'
+    ignore_availability: true
+    name: F1 - Qualification
+    track: true
+  - device_id: f1-race
+    search: "RACE:"
+    ignore_availability: true
+    name: F1 - Race
+    track: true
+  - device_id: f1-sprint-race
+    search: "SPRINT"
+    ignore_availability: true
+    name: F1 - Sprint Race
+    track: true
+  - device_id: f1-sprint-qualifying
+    search: "Q:"
+    ignore_availability: true
+    name: F1 - Sprint Qualifying
+    track: true
