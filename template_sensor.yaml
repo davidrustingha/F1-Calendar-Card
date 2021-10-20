@@ -107,3 +107,11 @@
       {% else %}
         {{ state_attr('calendar.f1_race', 'message') |replace ('Race: ','') |replace ('2020 ','') |replace ('2021 ','') |replace ('2022 ','') }}
       {% endif %}
+- name: F1 (sprint)
+  icon: mdi:keyboard-f1
+  state: >
+    {% if state_attr('calendar.f1_sprint_qualifying', 'start_time') == None %}
+      off
+    {% else %}
+      on
+    {% endif %}
