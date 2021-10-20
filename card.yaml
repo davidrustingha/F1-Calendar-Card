@@ -1,0 +1,70 @@
+type: entities
+title: Formula 1 
+state_color: true
+header:
+  type: picture
+  image: >-
+    https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png
+entities:
+  - type: 'custom:text-divider-row'
+    text: LOCATION DETAILS
+  - type: 'custom:template-entity-row'
+    name: Track
+    state: "{{ state_attr('sensor.formula_1', 'track') }}"
+    icon: 'mdi:alpha-t-box-outline'
+  - type: 'custom:template-entity-row'
+    name: GP
+    state: "{{ state_attr('sensor.formula_1', 'gp_name') }}"
+    icon: 'mdi:alpha-g-box-outline'
+  - type: 'custom:text-divider-row'
+    text: RACE DETAILS
+  - type: conditional
+    conditions:
+      - entity: sensor.f1_sprint
+        state: "off"
+    row:
+      - type: 'custom:template-entity-row'
+        name: 1st free practice
+        state: "{{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}"
+        icon: 'mdi:numeric-1-box-outline'
+      - type: 'custom:template-entity-row'
+        name: 2nd free practice
+        state: "{{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}"
+        icon: 'mdi:numeric-2-box-outline'
+      - type: 'custom:template-entity-row'
+        name: 3rd free practice
+        state: "{{ state_attr('sensor.formula_1', 'fp3_day') }}, {{ state_attr('sensor.formula_1', 'fp3_time') }}"
+        icon: 'mdi:numeric-3-box-outline'
+      - type: 'custom:template-entity-row'
+        name: Qualification
+        state: "{{ state_attr('sensor.formula_1', 'q_day') }}, {{ state_attr('sensor.formula_1', 'q_time') }}"
+        icon: 'mdi:alpha-q-box-outline'
+      - type: 'custom:template-entity-row'
+        name: Race
+        state: "{{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}"
+        icon: 'mdi:alpha-r-box-outline'
+  - type: conditional
+    conditions:
+      - entity: sensor.f1_sprint
+        state: "off"
+    row:
+      - type: 'custom:template-entity-row'
+        name: 1st free practice
+        state: "{{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}"
+        icon: 'mdi:numeric-1-box-outline'
+      - type: 'custom:template-entity-row'
+        name: 2nd free practice
+        state: "{{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}"
+        icon: 'mdi:numeric-2-box-outline'
+      - type: 'custom:template-entity-row'
+        name: Sprint Qualification
+        state: "{{ state_attr('sensor.formula_1', 'sprint_q_day') }}, {{ state_attr('sensor.formula_1', 'sprint_q_time') }}"
+        icon: 'mdi:numeric-3-box-outline'
+      - type: 'custom:template-entity-row'
+        name: Sprint Race
+        state: "{{ state_attr('sensor.formula_1', 'sprint_race_day') }}, {{ state_attr('sensor.formula_1', 'sprint_race_time') }}"
+        icon: 'mdi:alpha-q-box-outline'
+      - type: 'custom:template-entity-row'
+        name: Race
+        state: "{{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}"
+        icon: 'mdi:alpha-r-box-outline'
