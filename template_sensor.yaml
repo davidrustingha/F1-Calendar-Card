@@ -1,12 +1,13 @@
 - name: Formula 1
   icon: mdi:keyboard-f1
-  state: >
-    {% if is_state('calendar.f1_fp1', 'on') or is_state('calendar.f1_fp2', 'on') or is_state('calendar.f1_fp3', 'on') or is_state('calendar.f1_qualification', 'on') or is_state('calendar.f1_sprint_race', 'on') or is_state('calendar.f1_sprint_qualifying', 'on') %}
-      racing
-    {% else %}
-      not racing
-    {% endif %}
+  state: "{{ as_timestamp(strptime(state_attr('calendar.f1_race', 'start_time'), '%d %h %m')) | timestamp_custom('%W')| float == (now().isocalendar()[1]) }}"
   attributes:
+    currently_racing: >
+      {% if is_state('calendar.f1_fp1', 'on') or is_state('calendar.f1_fp2', 'on') or is_state('calendar.f1_fp3', 'on') or is_state('calendar.f1_qualification', 'on') or is_state('calendar.f1_sprint_race', 'on') or is_state('calendar.f1_sprint_qualifying', 'on') %}
+        racing
+      {% else %}
+        not racing
+      {% endif %}
     fp1_day: >
       {% if state_attr('calendar.f1_fp1', 'start_time') == None %}
         No 1st free practice this week
