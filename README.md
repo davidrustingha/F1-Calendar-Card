@@ -19,6 +19,16 @@ To minimize errors in your log file install the components in the following orde
 - Add F1 calendar to HA (use the entry in the google_calendar.yaml file)
 - Install Template Entity Row
 - Add card.yaml to dashboard
+- 
+-------------------------------------------------------------
+LANGUAGE
+-------------------------------------------------------------
+Want to use the card in a diffrect language? The following adjustments have to be made
+
+- Change the days and months in the template sensor
+- Change the text in the card
+
+And you're done
 
 -------------------------------------------------------------
 EXAMPLE
