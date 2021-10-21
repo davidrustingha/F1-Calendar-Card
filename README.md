@@ -18,6 +18,7 @@ ORDER OF INSTALLING
 To minimize errors in your log file install the components in the following order
 - Google Calendar Integration
 - Add F1 calendar to HA (use the entry in the google_calendar.yaml file)
+- Add template sensors to your config
 - Install Template Entity Row & Text Divider Row
 - Add card.yaml to dashboard
 - Enjoy!
