@@ -58,13 +58,13 @@
       {% endif %}
     sprint_q_day: >
       {% if state_attr('calendar.f1_sprint_qualifying', 'start_time') == None %}
-        No sprint qualifying this week
+        No sprint qualification this week
       {% else %}
         {{ as_timestamp(strptime(state_attr('calendar.f1_sprint_qualifying', 'start_time'), '%d %h %m')) | timestamp_custom('%A %d %B') | replace("Monday", "maandag") | replace("Tuesday", "dinsdag") | replace("Wednesday", "woensdag") | replace("Thursday", "donderdag") | replace("Friday", "vrijdag") | replace("Saturday", "zaterdag") | replace("Sunday", "zondag") | replace("January", "januari") | replace("February", "februari") | replace("March", "maart") | replace("April", "april") | replace("May", "mei") | replace("June", "juni") | replace("July", "juli") | replace("August", "augustus") | replace("September", "september") | replace("October", "oktober") | replace("November", "november") | replace("December", "december")  }} 
       {% endif %}
     sprint_q_time: >
       {% if state_attr('calendar.f1_sprint_qualifying', 'start_time') == None %}
-        No sprint qualifying this week
+        No sprint qualification this week
       {% else %}
         {{ as_timestamp(strptime(state_attr('calendar.f1_sprint_qualifying', 'start_time'), '%d %h %m')) | timestamp_custom('%H:%M') }} 
       {% endif %}
