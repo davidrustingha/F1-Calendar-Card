@@ -22,6 +22,22 @@ To minimize errors in your log file install the components in the following orde
 - Install Template Entity Row & Text Divider Row
 - Add card.yaml to dashboard
 - Enjoy!
+
+-------------------------------------------------------------
+WHERE TO PLACE TEMPLATE SENSORS
+-------------------------------------------------------------
+The card relies highly on the template sensors created in step 3 of the installation. People who use !include statements in their configuration.yaml file will be able to paste this directly inside their yaml file, or download the template_sensor.yaml file to their template sensor folder (If you want to learn more about this: https://www.home-assistant.io/docs/configuration/splitting_configuration/)
+
+For people who want to put this inside the configuration.yaml file you need to do the following.
+
+- Add template sensor entry to the config file:
+````
+template:
+  - sensor:
+````
+- Copy the content inside template_sensor.yaml file and paste under the '- sensor:' entry
+- Select all of the code you just copied and hit tab to indent the code under the '- sensor:' entry (works if you use the file editor addon, and also if you use the VSCode addon)
+- Check config and reload template entities.
 -------------------------------------------------------------
 LANGUAGE
 -------------------------------------------------------------
