@@ -19,3 +19,8 @@ To minimize errors in your log file install the components in the following orde
 - Add F1 calendar to HA (use the entry in the google_calendar.yaml file)
 - Install Template Entity Row
 - Add card.yaml to dashboard
+
+-------------------------------------------------------------
+EXAMPLE
+-------------------------------------------------------------
+![alt text](https://github.com/davidrustingha/F1-Calendar-Card/blob/main/example_f1_card.jpg)
