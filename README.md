@@ -52,3 +52,8 @@ And you're done
 EXAMPLE
 -------------------------------------------------------------
 ![alt text](https://github.com/davidrustingha/F1-Calendar-Card/blob/main/example_f1_card.jpg)
+
+-------------------------------------------------------------
+BUGS OR FEATURE REQUESTS
+-------------------------------------------------------------
+It will probably happen that you run into some bugs. Please raise an issue for those, so I can get the card as perfect as possible. The same goes for feature requests. You can always add the and if/when I find the time and answer I will implement it!
