@@ -111,8 +111,9 @@
 - name: F1 (sprint)
   icon: mdi:keyboard-f1
   state: >
-    {% if as_timestamp(state_attr('calendar.f1_sprint_race', 'start_time'), 'default') | timestamp_custom('%W', 'default') == now().isocalendar()[1] %}
+    {% if as_timestamp(state_attr('calendar.f1_sprint_race', 'start_time'), 0) | timestamp_custom('%W', 0) == now().isocalendar()[1] %}
       on
     {% else %}
       off
     {% endif %}
+
