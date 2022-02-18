@@ -1,160 +1,212 @@
-type: entities
-title: Formula 1 
-state_color: true
-header:
-  type: picture
-  image: >-
-    https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png
-entities:
-  - type: 'custom:text-divider-row'
-    text: LOCATION DETAILS
-  - type: 'custom:template-entity-row'
-    name: Track
-    state: "{{ state_attr('sensor.formula_1', 'track') }}"
-    icon: 'mdi:alpha-t-box-outline'
-  - type: 'custom:template-entity-row'
-    name: GP
-    state: "{{ state_attr('sensor.formula_1', 'gp_name') }}"
-    icon: 'mdi:alpha-g-box-outline'
-  - type: 'custom:text-divider-row'
-    text: RACE DETAILS
+type: vertical-stack
+cards:
   - type: conditional
     conditions:
-      - entity: sensor.f1_sprint
-        state: "off"
-    row:
-      type: 'custom:template-entity-row'
-      name: 1st free practice
-      state: >
-        {% if state_attr('sensor.formula_1', 'fp1_day') != 'No 1st free practice this week' %}
-          {{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}
-        {% else %}
-          No 1st free practice this week
-        {% endif %}
-      icon: 'mdi:numeric-1-box-outline'
+      - entity: sensor.formula_1
+        state: "not racing"
+    card:
+      type: entities
+      title: Formula 1
+      state_color: true
+      header:
+        type: picture
+        image: >-
+          https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png
+      entities:
+        - type: custom:text-divider-row
+          text: NEXT EVENT
+        - type: custom:template-entity-row
+          icon: mdi:alpha-g-box-outline
+          name: "{{ state_attr('calendar.f1_race', 'message') |replace('Race: 2022', '')}}"
+          state: "{{ state_attr('calendar.f1_race', 'location') }}"
+        - type: custom:template-entity-row
+          icon: mdi:alpha-c-box-outline
+          name: Count Down
+          state: >
+            {% set midnight = now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp() %}
+            {% set event = state_attr('calendar.f1_race', 'start_time') | as_timestamp %}
+            {% set delta = ((event - midnight) // 86400) | int %}
+            {% if delta == 0 %}
+              {{ ((as_timestamp(state_attr('calendar.f1_race', 'start_time')) - as_timestamp(now()))/3600) |round }} hours
+            {% else %}
+              {{ (delta / 7) | int}} weeks and {{ delta - (((delta / 7 )|int) * 7)}} days.
+            {% endif %}
+          secondary: >
+            {% if states('sensor.f1_sprint') == 'on' %}
+              {{ as_timestamp(state_attr('calendar.f1_fp1', 'start_time'), 0) | timestamp_custom('%d') }}, {{ as_timestamp(state_attr('calendar.f1_fp2', 'start_time'), 0) | timestamp_custom('%d') }} & {{ as_timestamp(state_attr('calendar.f1_race', 'start_time'), 0) | timestamp_custom('%d %B') }}
+            {% else %}
+              {{ as_timestamp(state_attr('calendar.f1_fp1', 'start_time'), 0) | timestamp_custom('%d') }}, {{ as_timestamp(state_attr('calendar.f1_fp3', 'start_time'), 0) | timestamp_custom('%d') }} & {{ as_timestamp(state_attr('calendar.f1_race', 'start_time'), 0) | timestamp_custom('%d %B') }}
+            {% endif %}
   - type: conditional
     conditions:
-      - entity: sensor.f1_sprint
-        state: "off"
-    row:
-      type: 'custom:template-entity-row'
-      name: 2nd free practice
-      state: >
-        {% if state_attr('sensor.formula_1', 'fp2_day') != 'No 2nd free practice this week' %}
-          {{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}
-        {% else %}
-          No 2nd free practice this week
-        {% endif %}
-      icon: 'mdi:numeric-2-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "off"
-    row:
-      type: 'custom:template-entity-row'
-      name: 3rd free practice
-      state: >
-        {% if state_attr('sensor.formula_1', 'fp3_day') != 'No 3rd free practice this week' %}
-          {{ state_attr('sensor.formula_1', 'fp3_day') }}, {{ state_attr('sensor.formula_1', 'fp3_time') }}
-        {% else %}
-          No 3rd free practice this week
-        {% endif %}
-      icon: 'mdi:numeric-3-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "off"
-    row:
-      type: 'custom:template-entity-row'
-      name: Qualification
-      state: >
-        {% if state_attr('sensor.formula_1', 'q_day') != 'No qualification this week' %}
-          {{ state_attr('sensor.formula_1', 'q_day') }}, {{ state_attr('sensor.formula_1', 'q_time') }}
-        {% else %}
-          No qualification this week
-        {% endif %}
-      icon: 'mdi:alpha-q-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "off"
-    row:
-      type: 'custom:template-entity-row'
-      name: Race
-      state: >
-        {% if state_attr('sensor.formula_1', 'r_day') != 'No race this week' %}
-          {{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}
-        {% else %}
-          No race this week
-        {% endif %}
-      icon: 'mdi:alpha-r-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "on"
-    row:
-      type: 'custom:template-entity-row'
-      name: 1st free practice
-      state: >
-        {% if state_attr('sensor.formula_1', 'fp1_day') != 'No 1st free practice this week' %}
-          {{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}
-        {% else %}
-          No 1st free practice this week
-        {% endif %}
-      icon: 'mdi:numeric-1-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "on"
-    row:
-      type: 'custom:template-entity-row'
-      name: Sprint Qualification
-      state: >
-        {% if state_attr('sensor.formula_1', 'sprint_q_day') != 'No sprint qualification this week' %}
-          {{ state_attr('sensor.formula_1', 'sprint_q_day') }}, {{ state_attr('sensor.formula_1', 'sprint_q_time') }}
-        {% else %}
-          No sprint qualification this week
-        {% endif %}
-      icon: 'mdi:alpha-q-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "on"
-    row:
-      type: 'custom:template-entity-row'
-      name: 2nd free practice
-      state: >
-        {% if state_attr('sensor.formula_1', 'fp2_day') != 'No 2nd free practice this week' %}
-          {{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}
-        {% else %}
-          No 2nd free practice this week
-        {% endif %}
-      icon: 'mdi:numeric-2-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "on"
-    row:
-      type: 'custom:template-entity-row'
-      name: Sprint Race
-      state: >
-        {% if state_attr('sensor.formula_1', 'sprint_race_day') != 'No sprint race this week' %}
-          {{ state_attr('sensor.formula_1', 'sprint_race_day') }}, {{ state_attr('sensor.formula_1', 'sprint_race_time') }}
-        {% else %}
-          No sprint race this week
-        {% endif %}
-      icon: 'mdi:alpha-r-box-outline'
-  - type: conditional
-    conditions:
-      - entity: sensor.f1_sprint
-        state: "on"
-    row:
-      type: 'custom:template-entity-row'
-      name: Race
-      state: >
-        {% if state_attr('sensor.formula_1', 'r_day') != 'No race this week' %}
-          {{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}
-        {% else %}
-          No race this week
-        {% endif %}
-      icon: 'mdi:alpha-r-box-outline'
+      - entity: sensor.formula_1
+        state: "racing"
+    card:
+      type: entities
+      title: Formula 1
+      state_color: true
+      header:
+        type: picture
+        image: >-
+          https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png
+      entities:
+        - type: custom:text-divider-row
+          text: LOCATION DETAILS
+        - type: custom:template-entity-row
+          name: Track
+          state: '{{ state_attr(''sensor.formula_1'', ''track'') }}'
+          icon: mdi:alpha-t-box-outline
+        - type: custom:template-entity-row
+          name: GP
+          state: '{{ state_attr(''sensor.formula_1'', ''gp_name'') }}'
+          icon: mdi:alpha-g-box-outline
+        - type: custom:text-divider-row
+          text: RACE DETAILS
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'off'
+          row:
+            type: custom:template-entity-row
+            name: 1st free practice
+            state: >
+              {% if state_attr('sensor.formula_1', 'fp1_day') != 'No 1st free practice
+              this week' %}
+                {{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}
+              {% else %}
+                No 1st free practice this week
+              {% endif %}
+            icon: mdi:numeric-1-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'off'
+          row:
+            type: custom:template-entity-row
+            name: 2nd free practice
+            state: >
+              {% if state_attr('sensor.formula_1', 'fp2_day') != 'No 2nd free practice
+              this week' %}
+                {{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}
+              {% else %}
+                No 2nd free practice this week
+              {% endif %}
+            icon: mdi:numeric-2-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'off'
+          row:
+            type: custom:template-entity-row
+            name: 3rd free practice
+            state: >
+              {% if state_attr('sensor.formula_1', 'fp3_day') != 'No 3rd free practice
+              this week' %}
+                {{ state_attr('sensor.formula_1', 'fp3_day') }}, {{ state_attr('sensor.formula_1', 'fp3_time') }}
+              {% else %}
+                No 3rd free practice this week
+              {% endif %}
+            icon: mdi:numeric-3-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'off'
+          row:
+            type: custom:template-entity-row
+            name: Qualification
+            state: >
+              {% if state_attr('sensor.formula_1', 'q_day') != 'No qualification this
+              week' %}
+                {{ state_attr('sensor.formula_1', 'q_day') }}, {{ state_attr('sensor.formula_1', 'q_time') }}
+              {% else %}
+                No qualification this week
+              {% endif %}
+            icon: mdi:alpha-q-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'off'
+          row:
+            type: custom:template-entity-row
+            name: Race
+            state: |
+              {% if state_attr('sensor.formula_1', 'r_day') != 'No race this week' %}
+                {{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}
+              {% else %}
+                No race this week
+              {% endif %}
+            icon: mdi:alpha-r-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'on'
+          row:
+            type: custom:template-entity-row
+            name: 1st free practice
+            state: >
+              {% if state_attr('sensor.formula_1', 'fp1_day') != 'No 1st free practice
+              this week' %}
+                {{ state_attr('sensor.formula_1', 'fp1_day') }}, {{ state_attr('sensor.formula_1', 'fp1_time') }}
+              {% else %}
+                No 1st free practice this week
+              {% endif %}
+            icon: mdi:numeric-1-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'on'
+          row:
+            type: custom:template-entity-row
+            name: Sprint Qualification
+            state: >
+              {% if state_attr('sensor.formula_1', 'sprint_q_day') != 'No sprint
+              qualification this week' %}
+                {{ state_attr('sensor.formula_1', 'sprint_q_day') }}, {{ state_attr('sensor.formula_1', 'sprint_q_time') }}
+              {% else %}
+                No sprint qualification this week
+              {% endif %}
+            icon: mdi:alpha-q-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'on'
+          row:
+            type: custom:template-entity-row
+            name: 2nd free practice
+            state: >
+              {% if state_attr('sensor.formula_1', 'fp2_day') != 'No 2nd free practice
+              this week' %}
+                {{ state_attr('sensor.formula_1', 'fp2_day') }}, {{ state_attr('sensor.formula_1', 'fp2_time') }}
+              {% else %}
+                No 2nd free practice this week
+              {% endif %}
+            icon: mdi:numeric-2-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'on'
+          row:
+            type: custom:template-entity-row
+            name: Sprint Race
+            state: >
+              {% if state_attr('sensor.formula_1', 'sprint_race_day') != 'No sprint
+              race this week' %}
+                {{ state_attr('sensor.formula_1', 'sprint_race_day') }}, {{ state_attr('sensor.formula_1', 'sprint_race_time') }}
+              {% else %}
+                No sprint race this week
+              {% endif %}
+            icon: mdi:alpha-r-box-outline
+        - type: conditional
+          conditions:
+            - entity: sensor.f1_sprint
+              state: 'on'
+          row:
+            type: custom:template-entity-row
+            name: Race
+            state: |
+              {% if state_attr('sensor.formula_1', 'r_day') != 'No race this week' %}
+                {{ state_attr('sensor.formula_1', 'r_day') }}, {{ state_attr('sensor.formula_1', 'r_time') }}
+              {% else %}
+                No race this week
+              {% endif %}
+            icon: mdi:alpha-r-box-outline
