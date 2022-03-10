@@ -29,7 +29,11 @@ cards:
             {% if delta == 0 %}
               {{ ((as_timestamp(state_attr('calendar.f1_race', 'start_time')) - as_timestamp(now()))/3600) |round }} hours
             {% else %}
-              {{ (delta / 7) | int}} weeks and {{ delta - (((delta / 7 )|int) * 7)}} days.
+              {% if  (delta / 7) | int < 2 %}
+                {{ (delta / 7) | int}} week and {{ delta - (((delta / 7 )|int) * 7)}} days.
+              {% else %}
+                {{ (delta / 7) | int}} week and {{ delta - (((delta / 7 )|int) * 7)}} days.
+              {% endif %}
             {% endif %}
           secondary: >
             {% if states('sensor.f1_sprint') == 'on' %}
