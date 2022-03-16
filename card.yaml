@@ -3,7 +3,7 @@ cards:
   - type: conditional
     conditions:
       - entity: sensor.formula_1
-        state: "not racing"
+        state: "no race this week"
     card:
       type: entities
       title: Formula 1
@@ -29,8 +29,10 @@ cards:
             {% if delta == 0 %}
               {{ ((as_timestamp(state_attr('calendar.f1_race', 'start_time')) - as_timestamp(now()))/3600) |round }} hours
             {% else %}
-              {% if  (delta / 7) | int < 2 %}
+              {% if  (delta / 7) | int < 2 and (delta / 7) | int >= 1 %}
                 {{ (delta / 7) | int}} week and {{ delta - (((delta / 7 )|int) * 7)}} days.
+              {% elif  (delta / 7) | int == 0 %}
+                {{ delta - (((delta / 7 )|int) * 7) }} days.
               {% else %}
                 {{ (delta / 7) | int}} week and {{ delta - (((delta / 7 )|int) * 7)}} days.
               {% endif %}
@@ -44,7 +46,7 @@ cards:
   - type: conditional
     conditions:
       - entity: sensor.formula_1
-        state: "racing"
+        state: "race this week"
     card:
       type: entities
       title: Formula 1
