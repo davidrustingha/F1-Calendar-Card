@@ -1,6 +1,7 @@
 # F1-Calendar-Card
 
-#I'm currently working on a major update on the card including track images and better information. It will contain one template sensor and the use of the Formula One Sensor made by Delzear (https://github.com/delzear/hass-formulaoneapi). It might be finished in a couple of weeks, but it all depends on the time I have to make it.
+# I'm currently working on a major update on the card including track images and better information. It will contain one template sensor and the use of the Formula One Sensor made by Delzear (https://github.com/delzear/hass-formulaoneapi). It might be finished in a couple of weeks, but it all depends on the time I have to make it.
+
 A card for upcoming F1 events - Featuring support for Sprint Race weeks and normal race weeks
 
 -------------------------------------------------------------
